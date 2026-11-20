@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Autopilot — ваши решения на телефоне</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1D4ED8}a:hover{color:#1E3A8A}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: #F4F3EF; color: #18181B; font-family: Inter, system-ui, sans-serif; font-size: 14px; line-height: 1.45; display: flex; flex-direction: column">
+
+  <header style="padding: 18px 18px 12px; background: #FFFFFF; border-bottom: 1px solid #E0DED7; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="8" stroke="#18181B" stroke-width="2"></rect><path d="M9 18l5-9 5 9" stroke="#C2410C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <div style="font-weight: 700; font-size: 17px; flex: 1">Ваши решения</div>
+      <span style="min-width: 24px; height: 24px; padding: 0 8px; box-sizing: border-box; border-radius: 999px; background: #C2410C; color: #FFFFFF; font-size: 12.5px; font-weight: 700; display: flex; align-items: center; justify-content: center">4</span>
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: #5F5E58">
+      <span style="display: flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: #DDF3E5; color: #166534; font-weight: 600"><span style="width: 7px; height: 7px; border-radius: 50%; background: #166534"></span>3 из 4 потоков</span>
+      <span>очередь 5 · PR на CI 2</span>
+    </div>
+  </header>
+
+  <div style="flex: 1; overflow: hidden; padding: 14px 14px 0; display: flex; flex-direction: column; gap: 12px">
+    <div style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #5F5E58">Claude ждёт ответа</div>
+    <div style="background: #FFFFFF; border: 1.5px solid #C2410C; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5F5E58">laravel-starter · #17</div>
+      <div style="font-weight: 600; font-size: 15px">Какую минимальную версию PHP поддерживать?</div>
+      <label style="display: flex; gap: 10px; align-items: center; min-height: 46px; padding: 0 12px; border: 1px solid #C2410C; background: #FDF0E7; border-radius: 11px">
+        <input type="radio" name="php-m" checked style="margin: 0; accent-color: #C2410C">
+        <span style="font-weight: 500">PHP 8.2 <span style="font-weight: 400; color: #5F5E58">— как сейчас</span></span>
+      </label>
+      <label style="display: flex; gap: 10px; align-items: center; min-height: 46px; padding: 0 12px; border: 1px solid #E0DED7; border-radius: 11px">
+        <input type="radio" name="php-m" style="margin: 0; accent-color: #C2410C">
+        <span style="font-weight: 500">PHP 8.3</span>
+      </label>
+      <div style="display: flex; gap: 8px">
+        <button style="flex: 1; height: 46px; border: 0; border-radius: 11px; background: #C2410C; color: #FFFFFF; font: inherit; font-weight: 600">Ответить</button>
+        <button style="flex: 1; height: 46px; border: 1px solid #E0DED7; border-radius: 11px; background: transparent; color: #18181B; font: inherit">Пусть решит сам</button>
+      </div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #E0DED7; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5F5E58">parser-py · #8 · разрешение</div>
+      <pre style="margin: 0; padding: 10px 12px; border-radius: 10px; background: #18181B; color: #F4F4F5; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; white-space: pre-wrap">$ docker compose up -d postgres</pre>
+      <div style="display: flex; gap: 8px">
+        <button style="flex: 1; height: 46px; border: 0; border-radius: 11px; background: #18181B; color: #F4F3EF; font: inherit; font-weight: 600">Разрешить</button>
+        <button style="flex: 1; height: 46px; border: 1px solid #E0DED7; border-radius: 11px; background: transparent; color: #B91C1C; font: inherit">Запретить</button>
+      </div>
+    </div>
+
+    <div style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #5F5E58; margin-top: 4px">Релизы</div>
+    <div style="background: #FFFFFF; border: 1px solid #E0DED7; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5F5E58">support-bot</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 2px 8px; border-radius: 6px; background: #DDF3E5; color: #166534">develop → main</span>
+      </div>
+      <div style="font-weight: 600; font-size: 15px">3 задачи готовы к релизу</div>
+      <div style="font-size: 13px; color: #5F5E58">#38 логирование ошибок · #40 /stats · #41 таймзона</div>
+      <a href="#" style="height: 46px; border-radius: 11px; background: #18181B; color: #F4F3EF; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center">Открыть PR на GitHub ↗</a>
+    </div>
+  </div>
+
+  <nav aria-label="Разделы" style="display: flex; background: #FFFFFF; border-top: 1px solid #E0DED7; padding: 6px 8px 22px">
+    <a href="#" style="flex: 1; min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: #C2410C; text-decoration: none; font-size: 11.5px; font-weight: 600">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-6l-2 3h-4l-2-3H2"></path><path d="M5.5 5h13L22 12v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6z"></path></svg>Решения
+    </a>
+    <a href="#" style="flex: 1; min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: #5F5E58; text-decoration: none; font-size: 11.5px">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"></path></svg>Задания
+    </a>
+    <a href="#" style="flex: 1; min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: #5F5E58; text-decoration: none; font-size: 11.5px">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"></path></svg>Идеи
+    </a>
+    <a href="#" style="flex: 1; min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: #5F5E58; text-decoration: none; font-size: 11.5px">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"></rect><path d="M8 4v16"></path></svg>Потоки
+    </a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

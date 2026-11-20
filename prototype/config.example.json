@@ -1,0 +1,163 @@
+{
+  "port": 4777,
+  "pollIntervalMinutes": 5,
+  "concurrency": 4,
+  "perRepoConcurrency": 1,
+  "ioConcurrency": 6,
+  "model": null,
+  "maxTurns": 150,
+  "repos": [
+    {
+      "repo": "prog-time/example-project",
+      "localPath": "~/code/example-project"
+    }
+  ],
+  "scan": {
+    "dirs": [
+      "~/code"
+    ],
+    "owners": [
+      "prog-time"
+    ],
+    "exclude": [
+      "prog-time/claude-config-main"
+    ]
+  },
+  "issues": {
+    "skipLabels": [
+      "wontfix",
+      "question",
+      "duplicate",
+      "invalid",
+      "claude:skip",
+      "needs-discussion"
+    ],
+    "onlyLabels": []
+  },
+  "autoMergeToDevelop": true,
+  "maxCiFixAttempts": 2,
+  "proposals": {
+    "enabled": true,
+    "intervalHours": 24,
+    "maxPendingPerRepo": 5,
+    "perRun": 3
+  },
+  "remedies": {
+    "enabled": true,
+    "diagnose": true,
+    "maxTurns": 30
+  },
+  "notifications": true,
+  "preventSleep": true,
+  "permissions": {
+    "autoAllowTools": [
+      "Read",
+      "Glob",
+      "Grep",
+      "LS",
+      "TodoWrite",
+      "Task",
+      "Agent",
+      "Skill",
+      "WebSearch",
+      "WebFetch",
+      "SlashCommand",
+      "NotebookRead"
+    ],
+    "autoAllowBashPrefixes": [
+      "ls",
+      "cat",
+      "pwd",
+      "head",
+      "tail",
+      "wc",
+      "find",
+      "grep",
+      "rg",
+      "jq",
+      "echo",
+      "test",
+      "mkdir",
+      "cd",
+      "diff",
+      "sort",
+      "uniq",
+      "git status",
+      "git diff",
+      "git log",
+      "git show",
+      "git branch",
+      "git rev-parse",
+      "git rev-list",
+      "git ls-remote",
+      "git remote",
+      "git fetch",
+      "git switch",
+      "git checkout",
+      "git pull --ff-only",
+      "git merge",
+      "git add",
+      "git commit",
+      "git stash list",
+      "git push -u origin issues-",
+      "git push origin issues-",
+      "git show-ref",
+      "gh auth status",
+      "gh repo view",
+      "gh issue view",
+      "gh issue list",
+      "gh issue create",
+      "gh issue comment",
+      "gh issue edit",
+      "gh pr list",
+      "gh pr view",
+      "gh pr create",
+      "gh pr checks",
+      "gh pr diff",
+      "gh run list",
+      "gh run view",
+      "gh label list",
+      "bash linting/",
+      "make lint",
+      "make test",
+      "python3 hooks/rules_check.py",
+      "composer install",
+      "composer test",
+      "composer validate",
+      "composer dump-autoload",
+      "vendor/bin/",
+      "php -l",
+      "php artisan test",
+      "python -m pytest",
+      "python3 -m pytest",
+      "pytest",
+      "ruff",
+      "mypy",
+      "python -m",
+      "python3 -m",
+      "npm ci",
+      "npm install",
+      "npm test",
+      "npm run",
+      "npx",
+      "node --check"
+    ],
+    "alwaysAskBashPatterns": [
+      "--force",
+      "push -f",
+      "--no-verify",
+      "reset --hard",
+      "rm -rf",
+      "sudo",
+      "gh pr merge",
+      "gh release",
+      "git push origin main",
+      "git push origin develop",
+      "git tag",
+      "curl",
+      "wget",
+      "docker",
+      "brew"
+    ]
+  }
+}

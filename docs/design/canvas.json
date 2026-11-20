@@ -1,0 +1,16 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-11-19T19:05:00Z" },
+  "title": "Claude Autopilot — дизайн панели",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 1180, "expand": "fill", "title": "Панель — десктоп" },
+    "Mobile.dc.html": { "x": 1520, "y": 0, "w": 390, "h": 844, "title": "Ваши решения — телефон" }
+  },
+  "order": ["Main.dc.html", "Mobile.dc.html"],
+  "notes": {
+    "n1": { "x": 1520, "y": 900, "w": 390, "text": "Стиль: «тихий центр управления». Inter — интерфейс, JetBrains Mono — всё техническое (ветки, команды, номера). Оранжевый — только то, что ждёт вашего решения. Тёмная тема — переключатель в Tweaks основной панели.", "fill": "gray", "size": "m" }
+  },
+  "designSystems": []
+}

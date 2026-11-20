@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Claude Autopilot</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">Claude Autopilot</div>
+    <div class="status" id="status"></div>
+    <div class="spacer"></div>
+    <div class="limits" id="limits"></div>
+    <button id="syncBtn" class="ghost">Проверить GitHub</button>
+    <button id="pauseBtn"></button>
+  </header>
+  <div class="lanes" id="lanes"></div>
+
+  <main>
+    <section class="col tasks">
+      <div class="col-head">
+        <h2>Задания Claude</h2>
+        <div class="tabs">
+          <button data-filter="work" class="tab active">В работе</button>
+          <button data-filter="develop" class="tab">В develop</button>
+          <button data-filter="all" class="tab">Все</button>
+        </div>
+      </div>
+      <div id="jobList"></div>
+      <div class="col-head"><h2>Репозитории</h2></div>
+      <div id="repoList"></div>
+    </section>
+
+    <section class="col detail" id="detail">
+      <div class="empty">Выберите задание слева</div>
+    </section>
+
+    <section class="col inbox">
+      <div class="col-head">
+        <h2>Ваши решения <span id="inboxCount" class="count"></span></h2>
+      </div>
+      <div id="inbox"></div>
+    </section>
+  </main>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

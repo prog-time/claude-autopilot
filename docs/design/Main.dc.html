@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Claude Autopilot — панель</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1D4ED8}a:hover{color:#1E3A8A}
+</style>
+</helmet>
+<div style="min-height: 1180px; background: {{t.bg}}; color: {{t.text}}; font-family: Inter, system-ui, sans-serif; font-size: 14px; line-height: 1.45; display: flex; flex-direction: column">
+
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 12px 24px; background: {{t.panel}}; border-bottom: 1px solid {{t.line}}">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="8" stroke="{{t.text}}" stroke-width="2"></rect><path d="M9 18l5-9 5 9" stroke="{{accent}}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <div style="font-weight: 700; font-size: 16px; letter-spacing: -0.01em">Autopilot</div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; padding: 5px 12px; border-radius: 999px; background: {{t.okSoft}}; color: {{t.okText}}; font-weight: 600; font-size: 13px">
+      <span style="width: 8px; height: 8px; border-radius: 50%; background: {{t.okText}}"></span>Работает
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 6px 18px; color: {{t.muted}}; font-size: 13px">
+      <span><b style="color: {{t.text}}">3</b> из 4 потоков</span>
+      <span>очередь <b style="color: {{t.text}}">5</b></span>
+      <span>PR на CI <b style="color: {{t.text}}">2</b></span>
+      <span>GitHub проверен 2 мин назад</span>
+    </div>
+    <div style="flex: 1"></div>
+    <div style="display: flex; align-items: center; gap: 16px; font-size: 13px; color: {{t.muted}}">
+      <div style="display: flex; align-items: center; gap: 8px">Потоки
+        <div style="display: flex; align-items: center; border: 1px solid {{t.line}}; border-radius: 8px; overflow: hidden">
+          <button aria-label="Меньше потоков" style="width: 32px; height: 32px; border: 0; background: {{t.sunk}}; color: {{t.text}}; font-size: 16px; cursor: pointer">−</button>
+          <span style="width: 32px; text-align: center; color: {{t.text}}; font-weight: 600; font-family: 'JetBrains Mono', monospace">4</span>
+          <button aria-label="Больше потоков" style="width: 32px; height: 32px; border: 0; background: {{t.sunk}}; color: {{t.text}}; font-size: 16px; cursor: pointer">+</button>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px">на проект
+        <div style="display: flex; align-items: center; border: 1px solid {{t.line}}; border-radius: 8px; overflow: hidden">
+          <button aria-label="Меньше потоков на проект" style="width: 32px; height: 32px; border: 0; background: {{t.sunk}}; color: {{t.text}}; font-size: 16px; cursor: pointer">−</button>
+          <span style="width: 32px; text-align: center; color: {{t.text}}; font-weight: 600; font-family: 'JetBrains Mono', monospace">1</span>
+          <button aria-label="Больше потоков на проект" style="width: 32px; height: 32px; border: 0; background: {{t.sunk}}; color: {{t.text}}; font-size: 16px; cursor: pointer">+</button>
+        </div>
+      </div>
+    </div>
+    <button style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border: 1px solid {{t.line}}; border-radius: 9px; background: {{t.panel}}; color: {{t.text}}; font: inherit; font-weight: 500; cursor: pointer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.6-6.4"></path><path d="M21 3v6h-6"></path></svg>Проверить GitHub
+    </button>
+    <button style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border: 1px solid {{t.line}}; border-radius: 9px; background: {{t.sunk}}; color: {{t.text}}; font: inherit; font-weight: 500; cursor: pointer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M8 5v14M16 5v14"></path></svg>Пауза
+    </button>
+  </header>
+
+  <section aria-label="Потоки" style="display: flex; gap: 12px; padding: 14px 24px; overflow-x: auto; border-bottom: 1px solid {{t.line}}">
+    <sc-for list="{{lanes}}" as="lane" hint-placeholder-count="4">
+      <div style="flex: 0 0 272px; box-sizing: border-box; padding: 12px 14px; border-radius: 12px; background: {{lane.bg}}; border: {{lane.border}}; display: flex; flex-direction: column; gap: 6px; min-height: 104px">
+        <sc-if value="{{lane.free}}" hint-placeholder-val="{{false}}">
+          <div style="margin: auto; color: {{t.muted}}; font-size: 13px">Свободный поток</div>
+        </sc-if>
+        <sc-if value="{{lane.busy}}" hint-placeholder-val="{{true}}">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{t.muted}}">{{lane.repo}}</span>
+            <span style="font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: {{lane.badgeBg}}; color: {{lane.badgeFg}}">{{lane.status}}</span>
+          </div>
+          <div style="font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{lane.title}}</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{lane.actColor}}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{lane.activity}}</div>
+          <div style="height: 4px; border-radius: 2px; background: {{t.sunk}}; overflow: hidden; margin-top: auto"><div style="height: 100%; width: {{lane.progress}}; background: {{lane.bar}}"></div></div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </section>
+
+  <div style="flex: 1; display: grid; grid-template-columns: 300px minmax(0, 1fr) 390px; min-height: 0">
+
+    <aside style="border-right: 1px solid {{t.line}}; padding: 18px 14px; display: flex; flex-direction: column; gap: 6px">
+      <div style="display: flex; gap: 4px; padding: 3px; background: {{t.sunk}}; border-radius: 10px; margin-bottom: 10px">
+        <button style="flex: 1; height: 32px; border: 0; border-radius: 8px; background: {{t.panel}}; color: {{t.text}}; font: inherit; font-size: 13px; font-weight: 600; box-shadow: {{t.shadow}}; cursor: pointer">В работе 7</button>
+        <button style="flex: 1; height: 32px; border: 0; border-radius: 8px; background: transparent; color: {{t.muted}}; font: inherit; font-size: 13px; cursor: pointer">В develop 4</button>
+        <button style="flex: 1; height: 32px; border: 0; border-radius: 8px; background: transparent; color: {{t.muted}}; font: inherit; font-size: 13px; cursor: pointer">Все</button>
+      </div>
+      <sc-for list="{{jobs}}" as="job" hint-placeholder-count="7">
+        <button style="text-align: left; border: 1px solid {{job.border}}; background: {{job.bg}}; border-radius: 10px; padding: 10px 12px; color: {{t.text}}; font: inherit; cursor: pointer; display: flex; flex-direction: column; gap: 5px">
+          <span style="font-weight: 600; font-size: 13.5px; line-height: 1.35">{{job.title}}</span>
+          <span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+            <span style="font-size: 11.5px; font-weight: 600; padding: 1px 8px; border-radius: 999px; background: {{job.badgeBg}}; color: {{job.badgeFg}}">{{job.status}}</span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: {{t.muted}}">{{job.ref}}</span>
+          </span>
+        </button>
+      </sc-for>
+
+      <div style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: {{t.muted}}; margin: 22px 4px 6px">Проекты · 6</div>
+      <sc-for list="{{repos}}" as="repo" hint-placeholder-count="5">
+        <div style="display: flex; align-items: center; gap: 10px; padding: 7px 6px 7px 10px; border-radius: 8px">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: {{repo.dot}}; flex: none"></span>
+          <span style="flex: 1; min-width: 0; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{repo.name}}</span>
+          <span style="font-size: 12px; color: {{t.muted}}">{{repo.count}}</span>
+          <button aria-label="Предложить идеи для проекта" style="width: 30px; height: 30px; border: 1px solid {{t.line}}; border-radius: 7px; background: {{t.panel}}; color: {{t.muted}}; cursor: pointer; display: flex; align-items: center; justify-content: center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"></path></svg>
+          </button>
+        </div>
+      </sc-for>
+    </aside>
+
+    <main style="padding: 26px 34px 40px; min-width: 0">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: {{t.muted}}; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center">
+        <span>prog-time/support-bot</span>
+        <span style="display: flex; align-items: center; gap: 5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="5" r="2"></circle><circle cx="6" cy="19" r="2"></circle><circle cx="18" cy="9" r="2"></circle><path d="M6 7v10M18 11c0 4-6 3-12 6"></path></svg>issues-42 → develop</span>
+        <a href="#">#42 на GitHub</a>
+      </div>
+      <h1 style="margin: 10px 0 14px; font-size: 26px; line-height: 1.25; letter-spacing: -0.015em; font-weight: 700">Добавить обработку вебхуков Telegram</h1>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+        <span style="font-size: 12.5px; font-weight: 600; padding: 4px 11px; border-radius: 999px; background: {{t.runBg}}; color: {{t.runFg}}">Выполняется · поток 1</span>
+        <span style="font-size: 13px; color: {{t.muted}}">план 3 / 5</span>
+        <span style="font-size: 13px; color: {{t.muted}}">12 мин</span>
+        <span style="font-size: 13px; color: {{t.muted}}">$0.84</span>
+        <div style="flex: 1"></div>
+        <button style="height: 36px; padding: 0 14px; border: 1px solid {{t.line}}; border-radius: 9px; background: {{t.panel}}; color: {{t.errText}}; font: inherit; font-weight: 500; cursor: pointer">Остановить</button>
+      </div>
+
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 28px; margin-top: 28px; align-items: start">
+        <section aria-label="План Claude" style="background: {{t.panel}}; border: 1px solid {{t.line}}; border-radius: 14px; padding: 18px 20px">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px">
+            <h2 style="margin: 0; font-size: 14px; font-weight: 600">План Claude</h2>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{t.muted}}">60%</span>
+          </div>
+          <div style="height: 6px; border-radius: 3px; background: {{t.sunk}}; overflow: hidden; margin-bottom: 14px"><div style="height: 100%; width: 60%; background: {{accent}}"></div></div>
+          <sc-for list="{{todos}}" as="todo" hint-placeholder-count="5">
+            <div style="display: flex; gap: 10px; padding: 7px 0; align-items: flex-start">
+              <span style="flex: none; width: 18px; height: 18px; border-radius: 50%; border: {{todo.ring}}; background: {{todo.fill}}; color: {{t.onAccent}}; font-size: 11px; display: flex; align-items: center; justify-content: center; margin-top: 1px">{{todo.mark}}</span>
+              <span style="font-size: 13.5px; color: {{todo.color}}; font-weight: {{todo.weight}}; text-decoration: {{todo.deco}}">{{todo.text}}</span>
+            </div>
+          </sc-for>
+        </section>
+
+        <section aria-label="Ход выполнения">
+          <h2 style="margin: 0 0 12px; font-size: 14px; font-weight: 600">Ход выполнения</h2>
+          <div style="border-left: 2px solid {{t.line}}; margin-left: 5px; padding-left: 18px; display: flex; flex-direction: column; gap: 12px">
+            <sc-for list="{{events}}" as="ev" hint-placeholder-count="8">
+              <div style="display: flex; gap: 12px; align-items: baseline">
+                <span style="flex: none; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: {{t.muted}}">{{ev.time}}</span>
+                <div style="min-width: 0; display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: baseline">
+                  <sc-if value="{{ev.tool}}" hint-placeholder-val="{{true}}">
+                    <span style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 500; padding: 1px 7px; border-radius: 6px; background: {{t.sunk}}; color: {{t.text}}">{{ev.tool}}</span>
+                  </sc-if>
+                  <span style="font-family: {{ev.font}}; font-size: {{ev.size}}; color: {{ev.color}}; word-break: break-word">{{ev.text}}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <aside aria-label="Ваши решения" style="border-left: 1px solid {{t.line}}; padding: 18px 18px 40px; display: flex; flex-direction: column; gap: 12px; background: {{t.inboxBg}}">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 2px">
+        <h2 style="margin: 0; font-size: 16px; font-weight: 700">Ваши решения</h2>
+        <span style="min-width: 22px; height: 22px; padding: 0 7px; box-sizing: border-box; border-radius: 999px; background: {{accent}}; color: {{t.onAccent}}; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">4</span>
+      </div>
+
+      <div style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: {{t.muted}}; margin-top: 6px">Claude ждёт ответа</div>
+      <div style="background: {{t.panel}}; border: 1.5px solid {{accent}}; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{t.muted}}">laravel-starter · #17</div>
+        <div style="font-weight: 600">Какую минимальную версию PHP поддерживать?</div>
+        <label style="display: flex; gap: 10px; align-items: flex-start; padding: 9px 11px; border: 1px solid {{accent}}; background: {{t.accentSoft}}; border-radius: 9px; cursor: pointer">
+          <input type="radio" name="php" checked style="margin: 3px 0 0; accent-color: {{accent}}">
+          <span><span style="font-weight: 500; display: block">PHP 8.2</span><span style="font-size: 12.5px; color: {{t.muted}}">Как в composer.json сейчас</span></span>
+        </label>
+        <label style="display: flex; gap: 10px; align-items: flex-start; padding: 9px 11px; border: 1px solid {{t.line}}; border-radius: 9px; cursor: pointer">
+          <input type="radio" name="php" style="margin: 3px 0 0; accent-color: {{accent}}">
+          <span><span style="font-weight: 500; display: block">PHP 8.3</span><span style="font-size: 12.5px; color: {{t.muted}}">Можно использовать typed class constants</span></span>
+        </label>
+        <div style="display: flex; gap: 8px">
+          <button style="height: 38px; padding: 0 16px; border: 0; border-radius: 9px; background: {{accent}}; color: {{t.onAccent}}; font: inherit; font-weight: 600; cursor: pointer">Ответить</button>
+          <button style="height: 38px; padding: 0 14px; border: 1px solid {{t.line}}; border-radius: 9px; background: transparent; color: {{t.text}}; font: inherit; cursor: pointer">Пусть решит сам</button>
+        </div>
+      </div>
+
+      <div style="background: {{t.panel}}; border: 1px solid {{t.line}}; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{t.muted}}">parser-py · #8 · разрешение</div>
+        <div style="font-weight: 600">Выполнить команду?</div>
+        <pre style="margin: 0; padding: 10px 12px; border-radius: 9px; background: {{t.code}}; color: {{t.codeText}}; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; white-space: pre-wrap">$ docker compose up -d postgres</pre>
+        <div style="display: flex; gap: 8px">
+          <button style="height: 38px; padding: 0 16px; border: 0; border-radius: 9px; background: {{t.text}}; color: {{t.bg}}; font: inherit; font-weight: 600; cursor: pointer">Разрешить</button>
+          <button style="height: 38px; padding: 0 14px; border: 1px solid {{t.line}}; border-radius: 9px; background: transparent; color: {{t.errText}}; font: inherit; cursor: pointer">Запретить</button>
+        </div>
+      </div>
+
+      <div style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: {{t.muted}}; margin-top: 8px">Релизы</div>
+      <div style="background: {{t.panel}}; border: 1px solid {{t.line}}; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{t.muted}}">support-bot</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 2px 8px; border-radius: 6px; background: {{t.okSoft}}; color: {{t.okText}}">develop → main</span>
+        </div>
+        <div style="font-weight: 600">3 задачи готовы к релизу</div>
+        <div style="display: flex; flex-direction: column; gap: 5px; font-size: 13px">
+          <span><span style="font-family: 'JetBrains Mono', monospace; color: {{t.muted}}">#38</span> Логирование ошибок API</span>
+          <span><span style="font-family: 'JetBrains Mono', monospace; color: {{t.muted}}">#40</span> Команда /stats для админа</span>
+          <span><span style="font-family: 'JetBrains Mono', monospace; color: {{t.muted}}">#41</span> Исправить таймзону в отчётах</span>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap">
+          <a href="#" style="height: 38px; padding: 0 14px; border-radius: 9px; background: {{t.text}}; color: {{t.bg}}; font-weight: 600; text-decoration: none; display: flex; align-items: center">Открыть PR ↗</a>
+          <button style="height: 38px; padding: 0 14px; border: 1px solid {{t.line}}; border-radius: 9px; background: transparent; color: {{t.text}}; font: inherit; cursor: pointer">git-release</button>
+        </div>
+      </div>
+
+      <div style="font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: {{t.muted}}; margin-top: 8px">Идеи · 2</div>
+      <div style="background: {{t.panel}}; border: 1px solid {{t.line}}; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: {{t.muted}}">parser-py</span>
+          <span style="font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: {{t.errSoft}}; color: {{t.errText}}">bug · S</span>
+        </div>
+        <div style="font-weight: 600">Утечка соединений при таймауте запроса</div>
+        <div style="font-size: 13px; color: {{t.muted}}">В fetcher.py сессия не закрывается при исключении — на длинных прогонах парсер упирается в лимит соединений.</div>
+        <label style="display: flex; flex-direction: column; gap: 5px; font-size: 12px; color: {{t.muted}}">Описание задачи
+          <textarea rows="3" style="font: inherit; font-size: 13px; color: {{t.text}}; background: {{t.sunk}}; border: 1px solid {{t.line}}; border-radius: 9px; padding: 8px 10px; resize: vertical">Обернуть сессию в контекстный менеджер, добавить тест на таймаут. Готово, когда соединения закрываются при любом исходе запроса.</textarea>
+        </label>
+        <div style="display: flex; gap: 8px">
+          <button style="height: 38px; padding: 0 16px; border: 0; border-radius: 9px; background: {{accent}}; color: {{t.onAccent}}; font: inherit; font-weight: 600; cursor: pointer">Создать задачу</button>
+          <button style="height: 38px; padding: 0 14px; border: 1px solid {{t.line}}; border-radius: 9px; background: transparent; color: {{t.text}}; font: inherit; cursor: pointer">Отклонить</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"accent":{"editor":"color","default":"#C2410C","options":["#C2410C","#1D4ED8","#7C3AED","#0F766E"]},"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var dark = this.props.dark ?? false;
+    var accent = this.props.accent ?? (dark ? '#F97316' : '#C2410C');
+    if (dark && accent === '#C2410C') accent = '#F97316';
+    var t = dark ? {
+      bg: '#0F0F11', panel: '#18181B', sunk: '#232327', line: '#2E2E33', text: '#EDEDEF', muted: '#A1A1A9',
+      inboxBg: '#141416', onAccent: '#1A0B02', accentSoft: '#2A1608', shadow: 'none',
+      okSoft: '#0B2A17', okText: '#86EFAC', runBg: '#172554', runFg: '#A5C8FF', errSoft: '#3A1111', errText: '#FCA5A5',
+      code: '#0A0A0C', codeText: '#E4E4E7'
+    } : {
+      bg: '#F4F3EF', panel: '#FFFFFF', sunk: '#EDECE7', line: '#E0DED7', text: '#18181B', muted: '#5F5E58',
+      inboxBg: '#EFEEE9', onAccent: '#FFFFFF', accentSoft: '#FDF0E7', shadow: '0 1px 2px rgba(0,0,0,0.08)',
+      okSoft: '#DDF3E5', okText: '#166534', runBg: '#E2EBFC', runFg: '#1E40AF', errSoft: '#FBE4E2', errText: '#B91C1C',
+      code: '#18181B', codeText: '#F4F4F5'
+    };
+    var badge = dark ? {
+      run: ['#172554', '#A5C8FF'], wait: ['#3B1A06', '#FDBA74'], pr: ['#2B1458', '#C9B8FF'], dev: ['#0B2A17', '#86EFAC'],
+      queue: ['#232327', '#A1A1A9'], block: ['#3A1111', '#FCA5A5']
+    } : {
+      run: ['#E2EBFC', '#1E40AF'], wait: ['#FDE8D7', '#9A3412'], pr: ['#ECE7FD', '#5B21B6'], dev: ['#DDF3E5', '#166534'],
+      queue: ['#EDECE7', '#5F5E58'], block: ['#FBE4E2', '#B91C1C']
+    };
+    var lanes = [
+      { repo: 'support-bot · #42', title: 'Обработка вебхуков Telegram', activity: 'Bash  vendor/bin/phpunit', progress: '60%', k: 'run', status: 'Выполняется' },
+      { repo: 'laravel-starter · #17', title: 'Кэш конфигурации', activity: 'Вопрос: какая версия PHP?', progress: '35%', k: 'wait', status: 'Ждёт вас' },
+      { repo: 'parser-py · #8', title: 'Поддержка прокси', activity: '↳ backend-agent  Edit parser/core.py', progress: '20%', k: 'run', status: 'Выполняется' },
+      { free: true }
+    ].map(function (l) {
+      if (l.free) return { free: true, busy: false, bg: 'transparent', border: '1.5px dashed ' + t.line };
+      var b = badge[l.k];
+      return Object.assign({}, l, {
+        free: false, busy: true, badgeBg: b[0], badgeFg: b[1],
+        bg: t.panel, border: l.k === 'wait' ? '1.5px solid ' + accent : '1px solid ' + t.line,
+        actColor: l.k === 'wait' ? (dark ? '#FDBA74' : '#9A3412') : t.muted,
+        bar: l.k === 'wait' ? accent : t.runFg
+      });
+    });
+    var jobs = [
+      { title: 'Кэш конфигурации', ref: 'laravel-starter #17', k: 'wait', status: 'Ждёт вас' },
+      { title: 'Обработка вебхуков Telegram', ref: 'support-bot #42', k: 'run', status: 'Выполняется', sel: true },
+      { title: 'Поддержка прокси', ref: 'parser-py #8', k: 'run', status: 'Выполняется' },
+      { title: 'Документация по установке', ref: 'cli-tools #12', k: 'block', status: 'CI не проходит' },
+      { title: 'Пагинация в API', ref: 'shop-api #23', k: 'pr', status: 'PR · CI идёт' },
+      { title: 'Тесты для импорта CSV', ref: 'shop-api #25', k: 'queue', status: 'В очереди' },
+      { title: 'Обновить зависимости', ref: 'cli-tools #13', k: 'queue', status: 'В очереди' }
+    ].map(function (j) {
+      var b = badge[j.k];
+      return Object.assign({}, j, { badgeBg: b[0], badgeFg: b[1], bg: j.sel ? t.panel : 'transparent', border: j.sel ? t.line : 'transparent' });
+    });
+    var repos = [
+      { name: 'support-bot', count: '2', dot: t.runFg },
+      { name: 'laravel-starter', count: '1', dot: accent },
+      { name: 'parser-py', count: '1', dot: t.runFg },
+      { name: 'shop-api', count: '2', dot: t.muted },
+      { name: 'cli-tools', count: '2', dot: t.errText },
+      { name: 'docs-site', count: '0', dot: t.line }
+    ];
+    var todos = [
+      { text: 'Изучить текущий роутинг бота', s: 'done' },
+      { text: 'Добавить контроллер вебхука', s: 'done' },
+      { text: 'Проверить подпись secret_token', s: 'done' },
+      { text: 'Запускаю тесты', s: 'now' },
+      { text: 'Обновить README', s: 'todo' }
+    ].map(function (x) {
+      return {
+        text: x.text,
+        mark: x.s === 'done' ? '✓' : '',
+        fill: x.s === 'done' ? accent : 'transparent',
+        ring: x.s === 'done' ? '1.5px solid ' + accent : x.s === 'now' ? '2px solid ' + accent : '1.5px solid ' + t.line,
+        color: x.s === 'done' ? t.muted : t.text,
+        weight: x.s === 'now' ? '600' : '400',
+        deco: x.s === 'done' ? 'line-through' : 'none'
+      };
+    });
+    var mono = "'JetBrains Mono', monospace";
+    var events = [
+      { time: '21:31:02', text: '/task_complete https://github.com/prog-time/support-bot/issues/42', kind: 'sys' },
+      { time: '21:31:09', tool: 'Bash', text: 'git switch -c issues-42', kind: 'cmd' },
+      { time: '21:31:15', tool: 'Skill', text: 'team-lead', kind: 'cmd' },
+      { time: '21:32:40', text: 'Задача простая — передаю backend-agent одной задачей.', kind: 'say' },
+      { time: '21:33:02', tool: '↳ Edit', text: 'app/Http/Controllers/WebhookController.php', kind: 'cmd' },
+      { time: '21:36:47', tool: '↳ Write', text: 'tests/Feature/WebhookTest.php', kind: 'cmd' },
+      { time: '21:41:20', tool: 'Bash', text: 'vendor/bin/phpunit --filter Webhook', kind: 'cmd' },
+      { time: '21:41:58', text: '1 тест упал: ожидался 403 без secret_token, пришёл 200. Исправляю проверку заголовка.', kind: 'err' },
+      { time: '21:43:11', tool: '↳ Edit', text: 'app/Http/Middleware/VerifyTelegramSecret.php', kind: 'cmd' }
+    ].map(function (e) {
+      return {
+        time: e.time, tool: e.tool || '', text: e.text,
+        font: e.kind === 'cmd' || e.kind === 'sys' ? mono : 'Inter, system-ui, sans-serif',
+        size: e.kind === 'cmd' || e.kind === 'sys' ? '12.5px' : '14px',
+        color: e.kind === 'err' ? t.errText : e.kind === 'cmd' || e.kind === 'sys' ? t.muted : t.text
+      };
+    });
+    return { t: t, accent: accent, lanes: lanes, jobs: jobs, repos: repos, todos: todos, events: events };
+  }
+}
+</script>
+</body>
+</html>
