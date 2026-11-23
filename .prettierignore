@@ -1,0 +1,11 @@
+node_modules
+dist
+coverage
+prototype
+docs
+pnpm-lock.yaml
+tasks
+github-tasks.json
+README.md
+CLAUDE.md
+.claude
