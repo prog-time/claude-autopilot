@@ -185,8 +185,9 @@ Autopilot не дублирует git-flow разработчика: он выз
 1. Режим «только чтение»: разрешены Read, Glob, Grep, LS, TodoWrite, Task/Agent, WebSearch, WebFetch и Bash из списка читающих команд. Всё остальное запрещается сразу, без вопроса человеку.
 2. `AskUserQuestion` → карточка «Вопрос»; ответ возвращается в `updatedInput.answers`. «Пусть решит сам» → `deny` с сообщением принять решение и отметить его в отчёте.
 3. Инструмент из `autoAllowTools` → разрешён. Bash-команда, точно совпадающая с одной из `approved_commands` задания (одобренное решение, раздел 4.4), → разрешена.
-4. Bash: команда делится по `&&`, `||`, `;`, `|` и переводам строки; префикс `VAR=value` отбрасывается. Разрешена, если каждая часть начинается с префикса из `autoAllowBashPrefixes`, нет подстановок `$(…)` и обратных кавычек и нет подстрок из `alwaysAskBashPatterns`.
-5. Всё остальное → карточка «Разрешение» с предпросмотром (команда, diff правки, JSON входа), уведомление macOS, задание ждёт. Комментарий к запрету передаётся Claude.
+4. Bash: команда делится по `&&`, `||`, `;`, `|` и переводам строки; префикс `VAR=value` отбрасывается. Части, которые являются `git push`, решает пункт 5; остальные части разрешены, если каждая начинается с префикса из `autoAllowBashPrefixes`, нет подстановок `$(…)` и обратных кавычек и нет подстрок из `alwaysAskBashPatterns`.
+5. `git push` проверяется отдельным разбором (`policy/git-push.ts`), а не префиксом. Автоматически разрешается только push одной ветки `issues-N` в `origin`: remote ровно `origin`; ровно один refspec `issues-N` или `issues-N:issues-N` (номер слева и справа совпадает), без ведущего `+`; из флагов допустимы только `-u` и `--set-upstream`. Всё остальное (`HEAD`, `refs/…`, пустая левая часть `:x`, несколько refspec, любые другие флаги, другой remote, push без refspec, глобальные опции git перед подкомандой вроде `git -C <path> push`) → карточка «Разрешение», не `deny`. Проверяется каждая часть цепочки; `alwaysAskBashPatterns` остаются дополнительной защитой.
+6. Всё остальное → карточка «Разрешение» с предпросмотром (команда, diff правки, JSON входа), уведомление macOS, задание ждёт. Комментарий к запрету передаётся Claude.
 
 По умолчанию всегда спрашиваются: `--force`, `push -f`, `--no-verify`, `reset --hard`, `rm -rf`, `sudo`, `gh pr merge`, `gh release`, `git tag`, `git push origin main`, `git push origin develop`, `curl`, `wget`, `docker`, `brew`.
 
@@ -345,7 +346,7 @@ SSE-события (`event:` + JSON в `data:`): `job.updated`, `job.event`, `ac
 | `budget.dailyUsd` | `null` | Дневной лимит расходов; при превышении — автопауза и карточка в панели |
 | `notifications`, `preventSleep` | `true`, `true` | Уведомления macOS, `caffeinate` |
 | `permissions.autoAllowTools` | Read, Glob, Grep, LS, TodoWrite, Task, Agent, Skill, WebSearch, WebFetch, SlashCommand | Инструменты без подтверждения |
-| `permissions.autoAllowBashPrefixes` | git/gh-команды процесса, тесты и линтеры PHP/Python/JS | Как в `config.example.json` прототипа |
+| `permissions.autoAllowBashPrefixes` | git/gh-команды процесса, тесты и линтеры PHP/Python/JS | Как в `config.example.json` прототипа. Префиксы `git push …` здесь не действуют: `git push` решает отдельное правило из 5.3 (пункт 5), на `git push` префикс не смотрится |
 | `permissions.alwaysAskBashPatterns` | см. 5.3 | Всегда на подтверждение |
 
 Изменения `config.json` подхватываются без перезапуска (watch файла с дебаунсом 500 мс), кроме `port`.
